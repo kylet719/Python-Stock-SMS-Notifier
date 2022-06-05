@@ -6,14 +6,13 @@ import timeit
 import threading
 import schedule
 from datetime import date
+import id
 
-# Twilio Credentials. Fill out with your own after making a free account
-accountSID = ""
-authToken = ""
-twilioPhoneNo = "+" # In +CountryCode format i.e +16041234567
 
-# Fill with the phone number you want to send your texts too
-phoneNo = "+" # In +CountryCode format i.e +16041234567
+accountSID = id.accountSID
+authToken = id.authToken
+twilioPhoneNo = id.twilioPhoneNo
+phoneNo = id.phoneNo
 
 # Now just run and you're all set!
 
@@ -52,8 +51,8 @@ def start_threading(var):
 
 if __name__ == "__main__":
     start = timeit.default_timer()
-    schedule.every().day.at("06:30").do(lambda: start_threading("Market Open"))
-    schedule.every().day.at("21:54").do(lambda: start_threading("Market Close"))
+    schedule.every().day.at(id.marketOpen).do(lambda: start_threading("Market Open"))
+    schedule.every().day.at(id.marketClose).do(lambda: start_threading("Market Close"))
     while True:
         print("In Loop")
         # Checks whether a scheduled task
