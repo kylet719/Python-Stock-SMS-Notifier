@@ -9,14 +9,14 @@ from datetime import date
 import id
 
 
+## Initalization fields
 accountSID = id.accountSID
 authToken = id.authToken
 twilioPhoneNo = id.twilioPhoneNo
 phoneNo = id.phoneNo
-
-# Now just run and you're all set!
-
 client = Client(accountSID, authToken)
+
+## Function to grab either top 5 gainers & losers. Sends a message of concatenated string to phone.
 def market_check(market_time, trend):
     output = market_time + " "+ str(date.today()) + "\n"
     stocklist = pd.read_html('https://finance.yahoo.com/'+ trend +'/')[0].head()
@@ -38,6 +38,7 @@ def market_check(market_time, trend):
         x += 1
     client.messages.create(to= phoneNo, from_= twilioPhoneNo, body = output)
 
+## Threading task to increase speed of pulling stock data
 def start_threading(var):
     print("Starting")
     t1 = threading.Thread(target=market_check, args=(var,"gainers"))
